@@ -1,14 +1,17 @@
 import { useState, useRef, useEffect } from "react";
-
-import img0 from "./assets/instabulkdownloader.com_DYkwW13lRs3_01.jpg";
-import img1 from "./assets/instabulkdownloader.com_DYkwW13lRs3_02.jpg";
-import img2 from "./assets/instabulkdownloader.com_DYkwW13lRs3_03.jpg";
-import img3 from "./assets/instabulkdownloader.com_DYkwW13lRs3_04.jpg";
-import img4 from "./assets/instabulkdownloader.com_DYkwW13lRs3_05.jpg";
-import img5 from "./assets/instabulkdownloader.com_DYkwW13lRs3_06.jpg";
-import img6 from "./assets/instabulkdownloader.com_DYkwW13lRs3_07.jpg";
-import img7 from "./assets/instabulkdownloader.com_DYkwW13lRs3_08.jpg";
-import img8 from "./assets/instabulkdownloader.com_DYkwW13lRs3_09.jpg";
+import img_RojoCristal from "./assets/cannes-01.jpg";
+import img_NudeCristal from "./assets/cannes-02.jpg";
+import img_CollageBocetos from "./assets/cannes-03.jpg";
+import img_MarronArch from "./assets/cannes-04.jpg";
+import img_FittingDorado01 from "./assets/cannes-05.jpg";
+import img_FinalHeidi from "./assets/cannes-06.jpg";
+import img_DetalleMulticolor from "./assets/intermoda-01.jpg";
+import img_TopAzulMariposa from "./assets/intermoda-02.jpg";
+import img_DoradoDorso from "./assets/intermoda-03.jpg";
+import img_DoradoFrente from "./assets/intermoda-04.jpg";
+import img_RojoEscamas from "./assets/intermoda-05.jpg";
+import img_GrupoBackstage from "./assets/intermoda-06.jpg";
+import img_FittingDorado02 from "./assets/portrait-designer-01.jpg";
 
 const FONT_URL = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Archivo+Black&family=Inter:wght@300;400;500;600&display=swap";
 
