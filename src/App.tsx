@@ -1,72 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 
-// Imágenes: se añadirán cuando estén en /src/assets/ con nombres limpios
-const IMAGE_MAP: Record<string, string> = {};
-
-import img_RojoCristal from "./assets/cannes-01.jpg";
-import img_NudeCristal from "./assets/cannes-02.jpg";
-import img_CollageBocetos from "./assets/cannes-03.jpg";
-import img_MarronArch from "./assets/cannes-04.jpg";
-import img_FittingDorado01 from "./assets/cannes-05.jpg";
-import img_FinalHeidi from "./assets/cannes-06.jpg";
-import img_DetalleMulticolor from "./assets/intermoda-01.jpg";
-import img_TopAzulMariposa from "./assets/intermoda-02.jpg";
-import img_DoradoDorso from "./assets/intermoda-03.jpg";
-import img_DoradoFrente from "./assets/intermoda-04.jpg";
-import img_RojoEscamas from "./assets/intermoda-05.jpg";
-import img_GrupoBackstage from "./assets/intermoda-06.jpg";
-import img_FittingDorado02 from "./assets/portrait-designer-01.jpg";
-
 const FONT_URL = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Archivo+Black&family=Inter:wght@300;400;500;600&display=swap";
 
-const realImages: Record<string, string> = {
-  "cannes-01": img0,
-  "cannes-02": img1,
-  "cannes-03": img2,
-  "cannes-04": img3,
-  "cannes-05": img4,
-  "cannes-06": img5,
-  "intermoda-01": img6,
-  "intermoda-02": img7,
-  "intermoda-03": img8,
-  "intermoda-04": img0,
-  "intermoda-05": img1,
-  "intermoda-06": img2,
-  "detail-bordado-01": img3,
-  "detail-cristal-01": img4,
-  "detail-corset-01": img5,
-  "portrait-designer-01": img6,
+const SHOW_IMAGE_IDS = true; // pon false cuando ya no necesites ver los ids
+
+// Mapa de imágenes reales. Vacío hasta que subas fotos a /src/assets/ con nombres limpios.
+// Para añadir una foto: sube el archivo y descomenta la línea correspondiente.
+const IMAGE_MAP: Record<string, string> = {
+  // "cannes-01": new URL("./assets/cannes-01.jpg", import.meta.url).href,
+  // "cannes-02": new URL("./assets/cannes-02.jpg", import.meta.url).href,
+  // "intermoda-01": new URL("./assets/intermoda-01.jpg", import.meta.url).href,
 };
-
-const getRealImage = (id: string) => (realImages as any)[id] || null;
-
-const SHOW_IMAGE_IDS = true;
-
-
-const ImageSlot = ({ id, ratio, className, alt }: { id: string; ratio?: string; className?: string; alt?: string }) => {
-  const realSrc = getRealImage(id);
-  return (
-    <div
-      style={{ backgroundColor: '#D6D2CB', aspectRatio: ratio || '3/4' }}
-      className={`relative w-full overflow-hidden group ${className || ''}`}
-    >
-      {realSrc ? (
-        <img
-          src={realSrc}
-          alt={alt || id}
-          loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-        />
-      ) : null}
-      {SHOW_IMAGE_IDS && (
-        <span className="absolute bottom-3 left-3 text-[10px] uppercase tracking-[0.18em] font-mono px-2 py-1 bg-black/40 backdrop-blur text-[#F5F3EF]/80">
-          {id}
-        </span>
-      )}
-    </div>
-  );
-};
-
 
 const siteData = {
   email: "hola@jesusdelagarsa.com",
@@ -131,32 +75,13 @@ const translations = {
 
 type Lang = "es" | "en";
 
-// MAPEO EXACTO DE IDS A FOTOS REALES A COLOR
-const IMAGE_MAP: Record<string, string> = {
-  "cannes-01": "",
-  "cannes-02": "",
-  "cannes-03": "",
-  "cannes-04": "",
-  "cannes-05": "",
-  "cannes-06": "",
-  "intermoda-01": "",
-  "intermoda-02": "",
-  "intermoda-03": "",
-  "intermoda-04": "",
-  "intermoda-05": "",
-  "intermoda-06": "",
-  "portrait-designer-01": "",
-  "detail-bordado-01": "",
-  "detail-cristal-01": "",
-  "detail-corset-01": "",
-};
-
 type ImageSlotProps = {
   id: string;
   ratio?: string;
   className?: string;
   alt?: string;
 };
+
 function ImageSlot({ id, ratio = "3/4", className = "", alt }: ImageSlotProps) {
   const realSrc = IMAGE_MAP[id];
   const hasReal = !!realSrc;
@@ -322,19 +247,14 @@ export default function App() {
         @keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
       `}</style>
 
-      {/* 1. NAVBAR */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#0E0E0E]/80 border-b border-white/10">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between px-6 md:px-10 h-[64px]">
           <a href="#" className="font-['Playfair_Display'] tracking-[0.18em] text-[13px] md:text-[14px] font-bold text-[#F5F3EF]">JESÚS DE LA GARSA</a>
-
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((l) => (
-              <a key={l.label} href={l.href} className="font-['Inter'] uppercase text-[11px] tracking-[0.22em] text-[#8C8880] hover:text-[#F5F3EF] transition-colors">
-                {l.label}
-              </a>
+              <a key={l.label} href={l.href} className="font-['Inter'] uppercase text-[11px] tracking-[0.22em] text-[#8C8880] hover:text-[#F5F3EF] transition-colors">{l.label}</a>
             ))}
           </nav>
-
           <div className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-2 font-['Inter'] text-[11px] tracking-[0.2em] uppercase">
               <button onClick={() => { setLang("es"); setLangTick(Date.now()); }} data-tick={langTick} className={`${lang === "es" ? "text-[#F5F3EF] underline underline-offset-4 decoration-[#8B1A1A]" : "text-[#8C8880]"} transition`}>ES</button>
@@ -343,7 +263,6 @@ export default function App() {
             </div>
             <a href="#contacto" className="border border-[#F5F3EF]/20 px-5 py-2 font-['Inter'] uppercase text-[11px] tracking-[0.2em] hover:bg-[#F5F3EF] hover:text-black transition-colors">{t.nav.cta}</a>
           </div>
-
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden w-8 h-8 flex flex-col justify-center gap-1.5" aria-label="Menu">
             <span className={`h-[1px] bg-[#F5F3EF] block transition-all ${menuOpen ? "rotate-45 translate-y-[3px]" : "w-6"}`} />
             <span className={`h-[1px] bg-[#F5F3EF] block transition-all ${menuOpen ? "-rotate-45 -translate-y-[3px]" : "w-4"}`} />
@@ -355,15 +274,7 @@ export default function App() {
         <div className="fixed inset-0 z-40 bg-[#0E0E0E] md:hidden flex flex-col animate-[fadeIn_0.3s_ease]">
           <div className="flex-1 flex flex-col justify-center px-8 pt-20">
             {navLinks.map((l, i) => (
-              <a
-                key={l.label}
-                href={l.href}
-                onClick={() => setMenuOpen(false)}
-                className="font-['Playfair_Display'] text-[12vw] leading-[0.85] tracking-[-0.02em] py-2 border-b border-white/5 opacity-0 animate-[slideUp_0.6s_ease_forwards]"
-                style={{ animationDelay: `${i * 0.08 + 0.1}s` }}
-              >
-                {l.label}
-              </a>
+              <a key={l.label} href={l.href} onClick={() => setMenuOpen(false)} className="font-['Playfair_Display'] text-[12vw] leading-[0.85] tracking-[-0.02em] py-2 border-b border-white/5 opacity-0 animate-[slideUp_0.6s_ease_forwards]" style={{ animationDelay: `${i * 0.08 + 0.1}s` }}>{l.label}</a>
             ))}
             <div className="mt-12 flex items-center gap-8">
               <a href="#contacto" onClick={() => setMenuOpen(false)} className="bg-[#F5F3EF] text-black px-10 py-5 font-['Inter'] uppercase text-[11px] tracking-[0.2em]">{t.nav.cta}</a>
@@ -376,7 +287,6 @@ export default function App() {
         </div>
       )}
 
-      {/* 2. HERO */}
       <section className="relative h-[100vh] w-full overflow-hidden max-w-full">
         <div className="absolute inset-0">
           <ImageSlot id="cannes-01" ratio="16/9" className="h-full w-full !aspect-auto" alt="Look 01 de Cannes, pasarela en La Croisette, silueta escultórica tono chocolate" />
@@ -384,56 +294,35 @@ export default function App() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
         </div>
         <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-10 max-w-[1600px] mx-auto pt-20 overflow-hidden">
-          <h1
-            className="font-['Playfair_Display'] font-black text-[#F5F3EF] leading-[0.85] tracking-[-0.04em] animate-[slideUp_1.2s_cubic-bezier(0.25,0.1,0.25,1)_forwards] max-w-full"
-            style={{ fontSize: "clamp(44px, 11vw, 160px)" }}
-          >
-            JESÚS DE
-            <br />
-            LA GARSA
-          </h1>
-          <p
-            className="font-['Inter'] text-[14px] md:text-[15px] tracking-wide text-[#F5F3EF]/90 mt-6 max-w-md leading-relaxed opacity-0 animate-[fadeIn_0.8s_ease_0.6s_forwards]"
-          >
-            {t.hero.line}
-          </p>
+          <h1 className="font-['Playfair_Display'] font-black text-[#F5F3EF] leading-[0.85] tracking-[-0.04em] animate-[slideUp_1.2s_cubic-bezier(0.25,0.1,0.25,1)_forwards] max-w-full" style={{ fontSize: "clamp(44px, 11vw, 160px)" }}>JESÚS DE<br />LA GARSA</h1>
+          <p className="font-['Inter'] text-[14px] md:text-[15px] tracking-wide text-[#F5F3EF]/90 mt-6 max-w-md leading-relaxed opacity-0 animate-[fadeIn_0.8s_ease_0.6s_forwards]">{t.hero.line}</p>
         </div>
-
         <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/10 flex flex-col md:flex-row justify-between px-6 md:px-10 py-4 gap-2 font-['Inter'] text-[10px] uppercase tracking-[0.2em] text-[#8C8880] bg-[#0E0E0E]/40 backdrop-blur-md max-w-full">
-          {t.hero.hitos.map((hito) => (
-            <span key={hito}>{hito}</span>
-          ))}
+          {t.hero.hitos.map((hito) => (<span key={hito}>{hito}</span>))}
         </div>
       </section>
 
-      {/* 3. MANIFIESTO */}
       <section className="bg-[#0E0E0E] py-32 md:py-48 px-6 md:px-10 max-w-[1600px] mx-auto overflow-hidden">
         <FadeUp>
           <h2 className="font-['Playfair_Display'] font-black text-[#F5F3EF] leading-[0.9] tracking-[-0.02em] max-w-6xl" style={{ fontSize: "clamp(36px, 6.5vw, 96px)" }}>
-            {t.manifiesto.quote.split(" ").slice(0,3).join(" ")}
-            <br />
-            {t.manifiesto.quote.split(" ").slice(3).join(" ")}
+            {t.manifiesto.quote.split(" ").slice(0,3).join(" ")}<br />{t.manifiesto.quote.split(" ").slice(3).join(" ")}
           </h2>
         </FadeUp>
         <FadeUp delay={0.2} className="mt-10">
-          <p className="font-['Inter'] text-[13px] md:text-[14px] leading-relaxed tracking-wide max-w-xl text-[#8C8880]">
-            {t.manifiesto.text}
-          </p>
+          <p className="font-['Inter'] text-[13px] md:text-[14px] leading-relaxed tracking-wide max-w-xl text-[#8C8880]">{t.manifiesto.text}</p>
         </FadeUp>
       </section>
 
-      {/* 4. COLECCIONES - TRES PROPUESTAS */}
       <section id="colecciones" className="bg-[#F5F3EF] text-[#0E0E0E] py-20 md:py-28 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10">
           <FadeUp>
             <span className="font-['Archivo_Black'] text-[10px] uppercase tracking-[0.3em] text-[#8C8880]">{t.colecciones.label}</span>
             <h2 className="font-['Playfair_Display'] text-5xl md:text-7xl leading-[0.9] mt-4">{t.colecciones.title}</h2>
           </FadeUp>
-
           <div className="mt-16 md:mt-24 grid grid-cols-12 gap-6 md:gap-8 items-start">
             <FadeUp className="col-span-12 md:col-span-5 group cursor-pointer">
               <div className="relative overflow-hidden">
-                <ImageSlot id="cannes-02" ratio="3/4" alt="Colección Magnum 2026, tono chocolate y cristales, look Cannes" className="h-[70vh] md:h-[85vh] !aspect-auto transition-transform duration-700 group-hover:scale-[1.02]" />
+                <ImageSlot id="cannes-02" ratio="3/4" alt="Colección Magnum 2026" className="h-[70vh] md:h-[85vh] !aspect-auto transition-transform duration-700 group-hover:scale-[1.02]" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500 flex items-end p-6 opacity-0 group-hover:opacity-100">
                   <span className="font-['Playfair_Display'] text-white text-2xl">Magnum</span>
                 </div>
@@ -441,10 +330,9 @@ export default function App() {
               <h3 className="font-['Playfair_Display'] text-3xl mt-5">Magnum (2026)</h3>
               <p className="font-['Inter'] text-[12px] leading-relaxed text-[#8C8880] mt-2 max-w-[36ch]">{t.colecciones.magnumConcept}</p>
             </FadeUp>
-
             <FadeUp delay={0.15} className="col-span-12 md:col-span-4 md:col-start-7 md:mt-32 group cursor-pointer">
               <div className="relative overflow-hidden">
-                <ImageSlot id="intermoda-01" ratio="4/5" alt="Colección Supernova Intermoda 85, mariposa símbolo transformación" className="h-[60vh] !aspect-auto transition-transform duration-700 group-hover:scale-[1.02]" />
+                <ImageSlot id="intermoda-01" ratio="4/5" alt="Colección Supernova" className="h-[60vh] !aspect-auto transition-transform duration-700 group-hover:scale-[1.02]" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500 flex items-end p-6 opacity-0 group-hover:opacity-100">
                   <span className="font-['Playfair_Display'] text-white text-2xl">Supernova</span>
                 </div>
@@ -452,10 +340,9 @@ export default function App() {
               <h3 className="font-['Playfair_Display'] text-3xl mt-5">Supernova (2026)</h3>
               <p className="font-['Inter'] text-[12px] leading-relaxed text-[#8C8880] mt-2 max-w-[32ch]">{t.colecciones.supernovaConcept}</p>
             </FadeUp>
-
             <FadeUp delay={0.3} className="col-span-12 md:col-span-3 md:col-start-2 md:mt-12 group cursor-pointer">
               <div className="relative overflow-hidden">
-                <ImageSlot id="lookbook-01" ratio="3/4" alt="Espuma de Mar, piezas ligeras veraniegas" className="h-[50vh] !aspect-auto transition-transform duration-700 group-hover:scale-[1.02]" />
+                <ImageSlot id="lookbook-01" ratio="3/4" alt="Espuma de Mar" className="h-[50vh] !aspect-auto transition-transform duration-700 group-hover:scale-[1.02]" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500 flex items-end p-6 opacity-0 group-hover:opacity-100">
                   <span className="font-['Playfair_Display'] text-white text-xl">Espuma de Mar</span>
                 </div>
@@ -467,7 +354,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. CAPÍTULO 01 — CANNES */}
       <section className="bg-[#0E0E0E] text-[#F5F3EF] py-24 md:py-36 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10 grid grid-cols-12 gap-6">
           <div className="col-span-12 overflow-hidden">
@@ -477,13 +363,11 @@ export default function App() {
             <h2 className="font-['Playfair_Display'] text-[9vw] md:text-[7vw] leading-[0.85] tracking-[-0.03em]">{lang === 'es' ? (<>Festival de<br />Cannes</>) : (<>Cannes<br />Film Festival</>)}</h2>
             <p className="font-['Inter'] uppercase text-[11px] tracking-[0.3em] text-[#8C8880] mt-6">{t.cannes.subtitle}</p>
           </FadeUp>
-
           <div ref={cannesRef} className="col-span-12 md:col-span-8 mt-12 relative overflow-hidden">
             <div style={{ transform: `translateY(${cannesParallax}px)` }} className="will-change-transform">
-              <ImageSlot id="cannes-03" ratio="16/10" alt="Pasarela Cannes 2026, House of Magnum curaduría Law Roach" className="!aspect-auto h-[56vw] md:h-[42vw]" />
+              <ImageSlot id="cannes-03" ratio="16/10" alt="Pasarela Cannes 2026" className="!aspect-auto h-[56vw] md:h-[42vw]" />
             </div>
           </div>
-
           <FadeUp className="col-span-12 md:col-span-3 md:col-start-10 mt-6 md:mt-12">
             <div className="font-['Inter'] text-[11px] uppercase tracking-[0.18em] leading-7 text-[#8C8880] border-l border-white/10 pl-6">
               {t.cannes.ficha.map((f) => {
@@ -492,27 +376,14 @@ export default function App() {
               })}
             </div>
           </FadeUp>
-
           <FadeUp className="col-span-12 md:col-span-6 mt-12">
-            <p className="font-['Inter'] text-[15px] leading-relaxed text-[#F5F3EF]/90 max-w-[54ch]">
-              {t.cannes.paragraph}
-            </p>
+            <p className="font-['Inter'] text-[15px] leading-relaxed text-[#F5F3EF]/90 max-w-[54ch]">{t.cannes.paragraph}</p>
             <p className="font-['Playfair_Display'] italic text-3xl md:text-4xl leading-tight mt-10 max-w-[18ch]">{t.cannes.dato}</p>
-            <button
-              onClick={() => {
-                setModal('magnum');
-                // scroll to collections in background for context
-                requestAnimationFrame(() => scrollToId('colecciones'));
-              }}
-              className="font-['Inter'] text-[11px] uppercase tracking-[0.2em] border-b border-[#8B1A1A] pb-1 mt-10 inline-block hover:text-[#8B1A1A] transition-colors text-left"
-            >
-              {t.cannes.link}
-            </button>
+            <button onClick={() => { setModal('magnum'); requestAnimationFrame(() => scrollToId('colecciones')); }} className="font-['Inter'] text-[11px] uppercase tracking-[0.2em] border-b border-[#8B1A1A] pb-1 mt-10 inline-block hover:text-[#8B1A1A] transition-colors text-left">{t.cannes.link}</button>
           </FadeUp>
         </div>
       </section>
 
-      {/* 6. CAPÍTULO 02 — INTERMODA */}
       <section className="bg-[#F5F3EF] text-[#0E0E0E] py-24 md:py-32 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10 grid grid-cols-12 gap-6">
           <div className="col-span-12 overflow-hidden">
@@ -522,13 +393,11 @@ export default function App() {
             <h2 className="font-['Playfair_Display'] text-[8vw] md:text-[5.5vw] leading-[0.85] tracking-[-0.03em]">{t.intermoda.title}</h2>
             <p className="font-['Inter'] uppercase text-[11px] tracking-[0.3em] text-[#8C8880] mt-5">{t.intermoda.subtitle}</p>
           </FadeUp>
-
           <div ref={intermodaRef} className="col-span-12 md:col-span-7 mt-10 relative overflow-hidden">
             <div style={{ transform: `translateY(${intermodaParallax}px)` }} className="will-change-transform">
-              <ImageSlot id="intermoda-02" ratio="16/10" alt="Intermoda 85 Fashion Space Guadalajara apertura Supernova" className="!aspect-auto h-[54vw] md:h-[36vw]" />
+              <ImageSlot id="intermoda-02" ratio="16/10" alt="Intermoda 85" className="!aspect-auto h-[54vw] md:h-[36vw]" />
             </div>
           </div>
-
           <FadeUp className="col-span-12 md:col-span-4 md:col-start-9 mt-6 md:mt-10">
             <div className="font-['Inter'] text-[11px] uppercase tracking-[0.18em] leading-7 text-[#8C8880] border-l border-black/10 pl-6">
               {t.intermoda.ficha.map((f) => {
@@ -538,39 +407,25 @@ export default function App() {
             </div>
             <p className="font-['Inter'] text-[14px] leading-relaxed mt-10 max-w-[42ch]">{t.intermoda.paragraph}</p>
             <p className="font-['Playfair_Display'] italic text-2xl md:text-3xl leading-tight mt-8">{t.intermoda.dato}</p>
-            <p className="mt-6 text-2xl md:text-3xl font-['Playfair_Display'] italic leading-tight text-[#0E0E0E] border-l-2 border-[#8B1A1A] pl-6">
-              "{t.intermoda.quoteButterfly}"
-            </p>
-            <button
-              onClick={() => {
-                setModal('supernova');
-                requestAnimationFrame(() => scrollToId('colecciones'));
-              }}
-              className="font-['Inter'] text-[11px] uppercase tracking-[0.2em] border-b border-[#8B1A1A] pb-1 mt-8 inline-block hover:text-[#8B1A1A] transition-colors text-left"
-            >
-              {t.intermoda.link}
-            </button>
+            <p className="mt-6 text-2xl md:text-3xl font-['Playfair_Display'] italic leading-tight text-[#0E0E0E] border-l-2 border-[#8B1A1A] pl-6">"{t.intermoda.quoteButterfly}"</p>
+            <button onClick={() => { setModal('supernova'); requestAnimationFrame(() => scrollToId('colecciones')); }} className="font-['Inter'] text-[11px] uppercase tracking-[0.2em] border-b border-[#8B1A1A] pb-1 mt-8 inline-block hover:text-[#8B1A1A] transition-colors text-left">{t.intermoda.link}</button>
           </FadeUp>
         </div>
       </section>
 
-      {/* 7. VESTUARIO */}
       <section id="vestuario" className="bg-[#0E0E0E] text-[#F5F3EF] py-24 md:py-40 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10">
           <FadeUp>
             <span className="font-['Archivo_Black'] text-[10px] uppercase tracking-[0.3em] text-[#8C8880]">{t.vestuario.label}</span>
-            <h2 className="font-['Playfair_Display'] font-black leading-[0.85] tracking-[-0.04em] mt-6" style={{ fontSize: "clamp(36px, 8vw, 112px)" }}>
-              {t.vestuario.title.split(" ").slice(0,2).join(" ")}<br />{t.vestuario.title.split(" ").slice(2).join(" ")}
-            </h2>
+            <h2 className="font-['Playfair_Display'] font-black leading-[0.85] tracking-[-0.04em] mt-6" style={{ fontSize: "clamp(36px, 8vw, 112px)" }}>{t.vestuario.title.split(" ").slice(0,2).join(" ")}<br />{t.vestuario.title.split(" ").slice(2).join(" ")}</h2>
             <p className="font-['Inter'] text-sm tracking-wide text-[#8C8880] mt-4">{t.vestuario.subtitle}</p>
             <p className="font-['Inter'] text-[14px] leading-relaxed text-[#8C8880] mt-8 max-w-2xl">{t.vestuario.text}</p>
           </FadeUp>
-
           <div className="mt-20 grid grid-cols-12 gap-6 md:gap-10 items-start">
             {celebs.map((c, i) => (
               <FadeUp key={c.id} delay={i * 0.05} className={`${c.col} group`}>
                 <div className="relative overflow-hidden">
-                  <ImageSlot id={c.id} ratio={c.ratio} alt={`${c.name}, ${c.meta}, ${c.desc}`} className={`${c.h} !aspect-auto transition-transform duration-700 group-hover:scale-[1.03]`} />
+                  <ImageSlot id={c.id} ratio={c.ratio} alt={`${c.name}, ${c.meta}`} className={`${c.h} !aspect-auto transition-transform duration-700 group-hover:scale-[1.03]`} />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute inset-0 flex items-end p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
                     <span className="font-['Playfair_Display'] text-white text-xl md:text-2xl">{c.name}</span>
@@ -584,42 +439,33 @@ export default function App() {
               </FadeUp>
             ))}
           </div>
-
           <FadeUp className="mt-16">
-            <button onClick={() => setModal('vestuario')} className="font-['Inter'] text-[11px] uppercase tracking-[0.2em] border-b border-[#8B1A1A] pb-1 inline-block hover:text-[#8B1A1A] transition-colors text-left">
-              {t.vestuario.link}
-            </button>
+            <button onClick={() => setModal('vestuario')} className="font-['Inter'] text-[11px] uppercase tracking-[0.2em] border-b border-[#8B1A1A] pb-1 inline-block hover:text-[#8B1A1A] transition-colors text-left">{t.vestuario.link}</button>
           </FadeUp>
         </div>
       </section>
 
-      {/* 8. MARQUESINA */}
       <div className="bg-[#0E0E0E] border-y border-white/10 py-6 overflow-hidden max-w-full w-full">
         <div className="flex whitespace-nowrap animate-[marquee_40s_linear_infinite] will-change-transform">
           {[...Array(4)].map((_, dup) => (
             <span key={dup} className="flex items-center shrink-0">
               {["DANTE","TTEN","BLACKPINK","SHAKIRA","KOURTNEY KARDASHIAN","DANNA PAOLA","BELINDA","COCO ROCHA","CHIARA FERRAGNI","House of Magnum","Festival de Cannes","Law Roach","Heidi Klum","Intermoda","ELLE México","Forbes Life"].map((t2) => (
-                <span key={t2+dup} className="font-['Archivo_Black'] uppercase text-[12px] tracking-[0.2em] text-[#F5F3EF] mx-6 flex items-center gap-6 shrink-0">
-                  {t2} <span className="text-[#8B1A1A]">·</span>
-                </span>
+                <span key={t2+dup} className="font-['Archivo_Black'] uppercase text-[12px] tracking-[0.2em] text-[#F5F3EF] mx-6 flex items-center gap-6 shrink-0">{t2} <span className="text-[#8B1A1A]">·</span></span>
               ))}
             </span>
           ))}
         </div>
       </div>
 
-      {/* 9. SOBRE MÍ TEASER */}
       <section id="sobre-mi" className="bg-[#F5F3EF] text-[#0E0E0E] py-24 md:py-32 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10 grid grid-cols-12 gap-8">
           <FadeUp className="col-span-12 md:col-span-5">
-            <ImageSlot id="portrait-designer-01" ratio="4/5" alt="Retrato Jesús de la Garsa diseñador Guanajuato" className="h-[80vh] md:h-[84vh] !aspect-auto" />
+            <ImageSlot id="portrait-designer-01" ratio="4/5" alt="Retrato Jesús de la Garsa" className="h-[80vh] md:h-[84vh] !aspect-auto" />
           </FadeUp>
           <FadeUp delay={0.2} className="col-span-12 md:col-span-6 md:col-start-7 md:pl-10 mt-2 md:mt-32">
             <h2 className="font-['Playfair_Display'] text-5xl md:text-[56px] leading-[0.9] tracking-[-0.02em]">{lang === 'es' ? (<>Guanajuato como<br />punto de partida</>) : (<>Guanajuato as<br />starting point</>)}</h2>
             <p className="font-['Inter'] text-[14px] leading-relaxed text-[#8C8880] mt-6 max-w-[48ch]">{t.sobreTeaser.text}</p>
-            <button onClick={() => setExpanded(!expanded)} className="font-['Inter'] text-[11px] uppercase tracking-[0.2em] border-b border-[#8B1A1A] pb-1 mt-8 inline-block hover:text-[#8B1A1A] transition-colors text-left">
-              {expanded ? t.sobreTeaser.less : t.sobreTeaser.link}
-            </button>
+            <button onClick={() => setExpanded(!expanded)} className="font-['Inter'] text-[11px] uppercase tracking-[0.2em] border-b border-[#8B1A1A] pb-1 mt-8 inline-block hover:text-[#8B1A1A] transition-colors text-left">{expanded ? t.sobreTeaser.less : t.sobreTeaser.link}</button>
             {expanded && (
               <div className="mt-10 space-y-6 animate-[fadeIn_0.6s_ease] border-t border-black/10 pt-10">
                 {t.sobreTeaser.fullBio.map((para, idx) => (
@@ -633,7 +479,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* 10. ATELIER */}
       <section className="bg-[#0E0E0E] text-[#F5F3EF] py-24 md:py-32 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10">
           <FadeUp>
@@ -652,7 +497,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* 11. PRENSA DESTACADA */}
       <section id="prensa" className="bg-[#F5F3EF] text-[#0E0E0E] py-24 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10 grid grid-cols-12 gap-10">
           <FadeUp className="col-span-12 md:col-span-6 border-l-2 border-[#8B1A1A] pl-8">
@@ -666,7 +510,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* 12. CTA FINAL */}
       <section id="contacto" className="bg-[#0E0E0E] text-[#F5F3EF] py-32 md:py-48 text-center px-6 overflow-hidden">
         <FadeUp>
           <h2 className="font-['Playfair_Display'] text-5xl md:text-8xl max-w-5xl mx-auto leading-[0.85] tracking-[-0.03em]">{t.cta.title}</h2>
@@ -676,7 +519,6 @@ export default function App() {
         </FadeUp>
       </section>
 
-      {/* 13. FOOTER */}
       <footer className="bg-[#0E0E0E] border-t border-white/10 py-16 px-6 md:px-10 overflow-hidden">
         <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-10 font-['Inter'] text-[11px] uppercase tracking-[0.18em] text-[#8C8880]">
           <div className="col-span-12 md:col-span-3 flex flex-col gap-3">
@@ -697,15 +539,11 @@ export default function App() {
         </div>
       </footer>
 
-      {/* MODALES */}
       {modal && (
         <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-10">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-[fadeIn_0.3s_ease]" onClick={() => setModal(null)} />
           <div className={`relative w-full md:max-w-6xl max-h-[92vh] md:max-h-[88vh] overflow-y-auto ${modal === 'vestuario' ? 'bg-[#0E0E0E] text-[#F5F3EF]' : 'bg-[#F5F3EF] text-[#0E0E0E]'} animate-[slideUp_0.5s_cubic-bezier(0.25,0.1,0.25,1)]`}>
-            <button onClick={() => setModal(null)} className={`absolute top-5 right-6 z-10 w-10 h-10 flex items-center justify-center border ${modal === 'vestuario' ? 'border-white/20 text-[#F5F3EF]' : 'border-black/20 text-black'} hover:bg-black hover:text-white transition-colors`} aria-label="Close">
-              <span className="text-xl leading-none">×</span>
-            </button>
-
+            <button onClick={() => setModal(null)} className={`absolute top-5 right-6 z-10 w-10 h-10 flex items-center justify-center border ${modal === 'vestuario' ? 'border-white/20 text-[#F5F3EF]' : 'border-black/20 text-black'} hover:bg-black hover:text-white transition-colors`} aria-label="Close"><span className="text-xl leading-none">×</span></button>
             {modal === 'magnum' && (
               <div className="p-8 md:p-12">
                 <span className="font-['Archivo_Black'] text-[10px] uppercase tracking-[0.3em] text-[#8C8880]">Magnum · Cannes 2026</span>
@@ -717,13 +555,12 @@ export default function App() {
                   </div>
                 </div>
                 <div className="mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {["cannes-02","cannes-03","cannes-04","cannes-05","cannes-06","cannes-01"].map((id) => (
+                  {["cannes-01","cannes-02","cannes-03","cannes-04","cannes-05","cannes-06"].map((id) => (
                     <ImageSlot key={id} id={id} ratio="3/4" className="h-[42vh] md:h-[48vh] !aspect-auto" alt={`Magnum look ${id}`} />
                   ))}
                 </div>
               </div>
             )}
-
             {modal === 'supernova' && (
               <div className="p-8 md:p-12">
                 <span className="font-['Archivo_Black'] text-[10px] uppercase tracking-[0.3em] text-[#8C8880]">Supernova · Intermoda 85</span>
@@ -741,7 +578,6 @@ export default function App() {
                 </div>
               </div>
             )}
-
             {modal === 'vestuario' && (
               <div className="p-8 md:p-12">
                 <span className="font-['Archivo_Black'] text-[10px] uppercase tracking-[0.3em] text-[#8C8880]">{t.vestuario.label}</span>
@@ -759,12 +595,7 @@ export default function App() {
                 </div>
                 <div className="mt-12 border-t border-white/10 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                   <p className="font-['Playfair_Display'] italic text-2xl max-w-md leading-tight">{t.cta.wardrobeQuestion}</p>
-                  <button
-                    onClick={() => { setModal(null); setTimeout(()=>scrollToId('contacto'),200); }}
-                    className="border border-[#F5F3EF] px-8 py-3 uppercase tracking-[0.2em] text-[11px] font-['Inter'] hover:bg-[#F5F3EF] hover:text-black transition-colors"
-                  >
-                    {t.cta.btn}
-                  </button>
+                  <button onClick={() => { setModal(null); setTimeout(()=>scrollToId('contacto'),200); }} className="border border-[#F5F3EF] px-8 py-3 uppercase tracking-[0.2em] text-[11px] font-['Inter'] hover:bg-[#F5F3EF] hover:text-black transition-colors">{t.cta.btn}</button>
                 </div>
               </div>
             )}
