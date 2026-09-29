@@ -1,4 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+
+// Imágenes: se añadirán cuando estén en /src/assets/ con nombres limpios
+const IMAGE_MAP: Record<string, string> = {};
+
 import img_RojoCristal from "./assets/cannes-01.jpg";
 import img_NudeCristal from "./assets/cannes-02.jpg";
 import img_CollageBocetos from "./assets/cannes-03.jpg";
